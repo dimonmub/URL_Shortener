@@ -8,17 +8,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
     Button btnGetResult;
     EditText longURL;
     TextView result;
+    ListView links;
     static String address="https://www.googleapis.com/urlshortener/v1/url";
+    ArrayAdapterItem adapter;
+    ArrayList<ObjectItem> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,12 @@ public class MainActivity extends Activity {
         btnGetResult = (Button) findViewById(R.id.getShortURL);
         longURL = (EditText) findViewById(R.id.longURL);
         result = (TextView) findViewById(R.id.result);
+        links = (ListView) findViewById(R.id.links);
+
+        data = new ArrayList<ObjectItem>();
+        adapter = new ArrayAdapterItem(this, R.layout.item, data);
+        links.setAdapter(adapter);
+
         View.OnClickListener oclBtnGetResult = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +68,8 @@ public class MainActivity extends Activity {
                 if (json != null) {
                     str_shortURL = json.getString("id");
                     result.setText(str_shortURL);
+                    data.add(new ObjectItem(str_shortURL));
+                    adapter.notifyDataSetChanged();
                 }
                 else result.setText("Error");
             } catch (JSONException e) {
