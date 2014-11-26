@@ -1,11 +1,13 @@
 package ru.dimonmubmail.url_shortener;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -38,6 +40,14 @@ public class MainActivity extends Activity {
         data = new ArrayList<ObjectItem>();
         adapter = new ArrayAdapterItem(this, R.layout.item, data);
         links.setAdapter(adapter);
+        links.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, ParametersActivity.class);
+                intent.putExtra(ParametersActivity.LINK, data.get(i).itemName);
+                startActivity(intent);
+            }
+        });
 
         View.OnClickListener oclBtnGetResult = new View.OnClickListener() {
             @Override

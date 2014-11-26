@@ -7,6 +7,7 @@
     <string name="enterLong">Введите длинную ссылку:</string>
     <string name="result">Короткая ссылка:</string>
     <string name="getResult">Получить короткую ссылку</string>
-
+    <string name="title_activity_parameters">ParametersActivity</string>
+    <string name="longLink">Длинная ссылка:</string>
 
 </resources>
