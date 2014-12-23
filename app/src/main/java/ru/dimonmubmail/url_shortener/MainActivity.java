@@ -68,23 +68,23 @@ public class MainActivity extends Activity {
         }
 
         protected JSONObject doInBackground(String... args) {
-            URLProcessing urlProcessing = new URLProcessing();
+            URLProcessing urlProcessing = new URLProcessing(new String());
             JSONObject json = urlProcessing.getJSON(address, str_longURL);
+            try {
+                str_shortURL = json.getString("id");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             return json;
         }
 
         protected void onPostExecute(JSONObject json) {
-            try {
-                if (json != null) {
-                    str_shortURL = json.getString("id");
-                    result.setText(str_shortURL);
-                    data.add(new ObjectItem(str_shortURL));
-                    adapter.notifyDataSetChanged();
-                }
-                else result.setText("Error");
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if (json != null) {
+                result.setText(str_shortURL);
+                data.add(new ObjectItem(str_shortURL));
+                adapter.notifyDataSetChanged();
             }
+                else result.setText("Error");
         }
     }
 

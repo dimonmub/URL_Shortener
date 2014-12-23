@@ -35,4 +35,74 @@
         android:layout_below="@id/longLink"
         android:id="@+id/longResult"/>
 
+    <TextView
+        android:text="@string/shortURLClicks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/longResult"
+        android:id="@+id/sURLClicks"/>
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sURLClicks"
+        android:id="@+id/shortURLClicks"/>
+
+    <TextView
+        android:text="@string/longURLClicks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shortURLClicks"
+        android:id="@+id/lURLClicks"/>
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lURLClicks"
+        android:id="@+id/longURLClicks"/>
+
+    <TextView
+        android:text="@string/country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/longURLClicks"
+        android:id="@+id/country"/>
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/country"
+        android:id="@+id/pCountry"/>
+
+    <TextView
+        android:text="@string/browser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pCountry"
+        android:id="@+id/browser"/>
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/browser"
+        android:id="@+id/pBrowser"/>
+
+    <TextView
+        android:text="@string/platform"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pBrowser"
+        android:id="@+id/platform"/>
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/platform"
+        android:id="@+id/pPlatform"/>
+
 </RelativeLayout>

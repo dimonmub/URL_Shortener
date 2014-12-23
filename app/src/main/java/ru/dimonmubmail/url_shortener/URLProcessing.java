@@ -27,20 +27,25 @@ public class URLProcessing {
     static InputStream inputStream = null;
     static JSONObject jObject = null;
     static String json = "";
-    public URLProcessing() {
+    static String link;
+    public URLProcessing(String link) {
+        this.link = link;
     }
-    private void getResponse() throws IOException,JSONException {
-        URL url = new URL("http://www.android.com/");
+    public MyObject getResponse() throws IOException,JSONException {
+        MyObject myObject;
+        String stringURL = "https://www.googleapis.com/urlshortener/v1/url?shortUrl=" + link + "&projection=FULL";
+        URL url = new URL(stringURL);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            readStream(in);
+            myObject = readStream(in);
         } finally {
             urlConnection.disconnect();
         }
+        return myObject;
     }
 
-    private void readStream(InputStream in) throws IOException, JSONException {
+    private MyObject readStream(InputStream in) throws IOException, JSONException {
         StringBuilder sb = new StringBuilder();
         BufferedReader rd = new BufferedReader(new InputStreamReader(in));
         String line;
@@ -49,6 +54,7 @@ public class URLProcessing {
         }
         String response = sb.toString();
         MyObject myObject = new MyObjectParser().parse(response);
+        return myObject;
     }
 
     public JSONObject getJSON(String address, String longURL) {

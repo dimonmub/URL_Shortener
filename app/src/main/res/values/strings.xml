@@ -9,5 +9,10 @@
     <string name="getResult">Получить короткую ссылку</string>
     <string name="title_activity_parameters">ParametersActivity</string>
     <string name="longLink">Длинная ссылка:</string>
+    <string name="shortURLClicks">Кликов по короткой ссылке:</string>
+    <string name="longURLClicks">Кликов по длинной ссылке:</string>
+    <string name="country">Страна:</string>
+    <string name="browser">Браузер:</string>
+    <string name="platform">Платформа:</string>
 
 </resources>
