@@ -12,10 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
@@ -26,7 +28,9 @@ public class MainActivity extends Activity {
     ListView links;
     static String address="https://www.googleapis.com/urlshortener/v1/url";
     ArrayAdapterItem adapter;
-    ArrayList<ObjectItem> data;
+    ArrayList<Link> data;
+    Button btnAddToDB;
+    Link link;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +40,23 @@ public class MainActivity extends Activity {
         longURL = (EditText) findViewById(R.id.longURL);
         result = (TextView) findViewById(R.id.result);
         links = (ListView) findViewById(R.id.links);
+        btnAddToDB = (Button) findViewById(R.id.addToDB);
 
-        data = new ArrayList<ObjectItem>();
+        data = new ArrayList<Link>();
+        try {
+            data = new ArrayList<Link>(MyDBHelper.getInstance(MainActivity.this).getLinkDAO().getAllLinks());
+            Toast.makeText(MainActivity.this, "Links loaded",Toast.LENGTH_SHORT).show();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         adapter = new ArrayAdapterItem(this, R.layout.item, data);
         links.setAdapter(adapter);
         links.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(MainActivity.this, ParametersActivity.class);
-                intent.putExtra(ParametersActivity.LINK, data.get(i).itemName);
+                intent.putExtra(ParametersActivity.LINK, data.get(i).getText());
                 startActivity(intent);
             }
         });
@@ -57,7 +69,22 @@ public class MainActivity extends Activity {
             }
         };
 
+        View.OnClickListener oclBtnAddToDB = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    link = new Link((String)result.getText());
+                    MyDBHelper dbHelper = MyDBHelper.getInstance(MainActivity.this);
+                    dbHelper.getLinkDAO().create(link);
+                    Toast.makeText(MainActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
         btnGetResult.setOnClickListener(oclBtnGetResult);
+        btnAddToDB.setOnClickListener(oclBtnAddToDB);
     }
 
     private class URLShort extends AsyncTask<String, String, JSONObject> {
@@ -81,7 +108,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(JSONObject json) {
             if (json != null) {
                 result.setText(str_shortURL);
-                data.add(new ObjectItem(str_shortURL));
+                data.add(new Link(str_shortURL));
                 adapter.notifyDataSetChanged();
             }
                 else result.setText("Error");

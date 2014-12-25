@@ -18,23 +18,32 @@ public class MyObjectParser implements Parser<MyObject> {
         myObject.setShortURLClicks(allTime.getString("shortUrlClicks"));
         myObject.setLongURLClicks(allTime.getString("longUrlClicks"));
 
-        JSONArray countries = allTime.getJSONArray("countries");
-        for (int i = 0; i < countries.length(); i++) {
-            JSONObject itemJson = countries.getJSONObject(i);
+        if (allTime.optJSONArray("countries") != null)
+        {
+            JSONArray countries = allTime.getJSONArray("countries");
+            JSONObject itemJson = countries.getJSONObject(0);
             myObject.setCountry(itemJson.getString("id"));
         }
+        else
+            myObject.setCountry("error");
 
-        JSONArray browsers = allTime.getJSONArray("browsers");
-        for (int i = 0; i < browsers.length(); i++) {
-            JSONObject itemJson = browsers.getJSONObject(i);
+        if (allTime.optJSONArray("browsers") != null)
+        {
+            JSONArray browsers = allTime.getJSONArray("browsers");
+            JSONObject itemJson = browsers.getJSONObject(0);
             myObject.setBrowser(itemJson.getString("id"));
         }
+        else
+            myObject.setBrowser("error");
 
-        JSONArray platforms = allTime.getJSONArray("platforms");
-        for (int i = 0; i < platforms.length(); i++) {
-            JSONObject itemJson = platforms.getJSONObject(i);
+        if (allTime.optJSONArray("platforms") != null)
+        {
+            JSONArray platforms = allTime.getJSONArray("platforms");
+            JSONObject itemJson = platforms.getJSONObject(0);
             myObject.setPlatform(itemJson.getString("id"));
         }
+        else
+            myObject.setPlatform("error");
 
         return myObject;
     }

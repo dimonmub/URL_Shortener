@@ -13,10 +13,10 @@ import java.util.ArrayList;
 /**
  * Created by Dmitriy Mubarakshin on 26.11.2014.
  */
-public class ArrayAdapterItem extends ArrayAdapter<ObjectItem> {
+public class ArrayAdapterItem extends ArrayAdapter<Link> {
 
     int layoutResourceId;
-    public ArrayAdapterItem(Context mContext, int layoutResourceId, ArrayList<ObjectItem> data) {
+    public ArrayAdapterItem(Context mContext, int layoutResourceId, ArrayList<Link> data) {
 
         super(mContext, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
@@ -35,7 +35,7 @@ public class ArrayAdapterItem extends ArrayAdapter<ObjectItem> {
         else {
             holder = (ViewHolder)convertView.getTag();
         }
-        holder.mTextView.setText(getItem(position).itemName);
+        holder.mTextView.setText(getItem(position).getText());
 
         return convertView;
     }

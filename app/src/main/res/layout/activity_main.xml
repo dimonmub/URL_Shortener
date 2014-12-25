@@ -35,13 +35,21 @@
         android:layout_marginTop="20dp"
         android:id="@+id/result"/>
 
-    <ListView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/result"
+        android:id="@+id/addToDB"
+        android:text="@string/addToDB"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addToDB"
         android:layout_marginTop="20dp"
         android:id="@+id/links">
     </ListView>
+
 
 
 
