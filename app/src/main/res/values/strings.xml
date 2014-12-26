@@ -15,5 +15,6 @@
     <string name="browser">Браузер:</string>
     <string name="platform">Платформа:</string>
     <string name="addToDB">Добавить в базу данных</string>
+    <string name="clearDB">Очистить базу данных</string>
 
 </resources>

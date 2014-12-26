@@ -50,6 +50,13 @@
         android:id="@+id/links">
     </ListView>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/links"
+        android:id="@+id/clearDB"
+        android:text="@string/clearDB"/>
+
 
 
 

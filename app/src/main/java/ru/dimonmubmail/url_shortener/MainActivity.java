@@ -30,6 +30,8 @@ public class MainActivity extends Activity {
     ArrayAdapterItem adapter;
     ArrayList<Link> data;
     Button btnAddToDB;
+    Button btnClearDB;
+
     Link link;
 
     @Override
@@ -41,11 +43,12 @@ public class MainActivity extends Activity {
         result = (TextView) findViewById(R.id.result);
         links = (ListView) findViewById(R.id.links);
         btnAddToDB = (Button) findViewById(R.id.addToDB);
+        btnClearDB = (Button) findViewById(R.id.clearDB);
 
         data = new ArrayList<Link>();
         try {
             data = new ArrayList<Link>(MyDBHelper.getInstance(MainActivity.this).getLinkDAO().getAllLinks());
-            Toast.makeText(MainActivity.this, "Links loaded",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "Links loaded",Toast.LENGTH_SHORT).show();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -64,16 +67,22 @@ public class MainActivity extends Activity {
         View.OnClickListener oclBtnGetResult = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                URLShort urlShort = new URLShort();
-                urlShort.execute();
+                if (longURL.getText().toString().equals(""))
+                    Toast.makeText(MainActivity.this, "Empty URL!",Toast.LENGTH_SHORT).show();
+                else {
+                    URLShort urlShort = new URLShort();
+                    urlShort.execute();
+                }
             }
         };
 
         View.OnClickListener oclBtnAddToDB = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    link = new Link((String)result.getText());
+                if (result.getText().toString().equals("Короткая ссылка:"))
+                    Toast.makeText(MainActivity.this, "Empty short link!",Toast.LENGTH_SHORT).show();
+                else try {
+                    link = new Link((String) result.getText());
                     MyDBHelper dbHelper = MyDBHelper.getInstance(MainActivity.this);
                     dbHelper.getLinkDAO().create(link);
                     Toast.makeText(MainActivity.this, "Added", Toast.LENGTH_SHORT).show();
@@ -83,8 +92,23 @@ public class MainActivity extends Activity {
             }
         };
 
+        View.OnClickListener oclBtnClearDB = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    MyDBHelper.getInstance(MainActivity.this).getLinkDAO().clear();
+                    Toast.makeText(MainActivity.this, "Cleared", Toast.LENGTH_SHORT).show();
+                    data.clear();
+                    adapter.notifyDataSetChanged();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
         btnGetResult.setOnClickListener(oclBtnGetResult);
         btnAddToDB.setOnClickListener(oclBtnAddToDB);
+        btnClearDB.setOnClickListener(oclBtnClearDB);
     }
 
     private class URLShort extends AsyncTask<String, String, JSONObject> {
